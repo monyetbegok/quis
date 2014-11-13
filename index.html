@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quiz</title>
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<script src="assets/sweet-alert.js"></script>
+	<link rel="stylesheet" href="assets/sweet-alert.css">
+	<style>
+		.contain {
+			background: rgb(239, 239, 239);
+			max-width: 500px;
+			margin: 0 auto;
+			padding: 20px;
+			box-shadow: 0px 0px 14px -2px;
+			margin-top: 19px;
+			border-radius: 12px;
+		}
+	</style>
+	<script>
+	var waktuval = 0;
+	var score = 0;
+	var i = 0;
+		function pertanyaan(){
+			var pertanyaan = [
+				["5 x 5",5 * 5],
+				["5 x 6",5 * 6],
+				["30 x 5",30 * 5],
+				["56 x 7",56 * 7],
+				["60 x 9",60 * 9],
+				["42 x 8",42 * 8],
+				["45 x 78",45 * 78],
+				["88 x 3",88 * 3],
+				["9 x 8",9 * 8],
+				["123 x 66",123 * 66]
+			];
+			if (i == 9){
+				clearInterval(myVar);
+				swal({   
+					title: "Permainan Selesai Score " + score,
+					text: "Yakin mau main lagi ?",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonText: "Iyo aku pengen!",
+					cancelButtonText: "Ndak wes males!",
+					closeOnConfirm: false,
+					closeOnCancel: false },
+					function(isConfirm){
+					   if (isConfirm) {
+					        swal("Horee!", "Oke kamu akan mulai dari awal lagi !", "success");
+					        window.location.reload();  
+					    } else {     
+					    	swal("Cemen", "Yaudah scoremu adalah "+ score, "error");   } 
+					});
+			}else{
+				getpertanyaan(pertanyaan[i+1]);
+				askQuestion(pertanyaan[i]);
+				i++;
+			}
+		}
+
+		function askQuestion(question){
+			var answer = document.getElementById("jawaban").value;
+			if (answer == question[1]) {
+				swal("Hebat !!","Ketika jawabanmu benar maka score akan menambah 10","success");
+        		score = score + 10;
+        		waktuval = 0;
+    		} else {
+    			swal("Goblok !! Yang bener itu " + question[1],"Ketika salah maka score akan berkurang sejumlah 5","error");
+        		score = score - 5;
+        		waktuval = 0;
+    		}
+    		document.getElementById('score').innerHTML = "Score : " + score;
+    		document.getElementById("jawaban").value = "";
+		}
+
+		function getpertanyaan(question){
+			document.getElementById("pertanyaan").innerHTML = question[0];
+		}
+		</script>
+</head>
+<body>
+<div class="contain" align="center">
+	<div class="page-header">
+		<h1>Pertanyaan</h1>
+	</div>
+	<h2 id="pertanyaan">5 x 5</h2>
+	<label for="Jawaban"></label>
+	<input type="text" name="jawaban" id="jawaban" class="form-control input-lg" placeholder="Tulis Jawabanmu Disini"/>
+	<button id="btnjawab" class="btn btn-primary btn-lg btn-block" onclick="pertanyaan();">Jawab</button>
+	<div class="page-header">
+		<h2 id="score">Score : 0</h2>
+	</div>
+	<div class="progress">
+  		<div id="progress" class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="waktuval" aria-valuemin="0" aria-valuemax="100">
+    		<span class="sr-only">45% Complete</span>
+  		</div>
+	</div>
+</div>
+<script>
+	var myVar = setInterval(function(){
+		waktu();
+	},300);
+	function waktu(){
+		if(waktuval == 100){
+			waktuval = 0;
+			pertanyaan();
+		}else{
+			waktuval++;
+			document.getElementById("progress").style.width = waktuval + "%";
+		}
+	}
+</script>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+</body>
+</html>
