@@ -1,4 +1,4 @@
-quis
+quiz
 ====
 
-quis menggunakan javascript
+Membuat quiz menggunakan javascript, jquery, dan sweet-alert
